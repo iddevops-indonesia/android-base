@@ -1,0 +1,188 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'com.google.firebase.appdistribution'
+
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.iddevops.android_base"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+
+        setProperty("archivesBaseName", "Kejati-SINAP-DailyBuild-v$versionName")
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "Boolean", "ALLOW_ROOT", ALLOW_ROOT
+        buildConfigField "Boolean", "ALLOW_EMULATOR", ALLOW_EMULATOR
+        buildConfigField "String", "NOTIFICATION_CHANNEL", NOTIFICATION_CHANNEL
+    }
+    signingConfigs {
+        release {
+            if(keystorePropertiesFile.exists()){
+                keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+                storeFile rootProject.file(keystoreProperties['KEYSTORE_FILE'])
+                storePassword keystoreProperties['STORE_PASSWORD']
+                keyAlias keystoreProperties['KEY_ALIAS']
+                keyPassword keystoreProperties['KEY_PASSWORD']
+            }
+        }
+    }
+    buildTypes {
+        debug {
+            resValue "string", "app_name", "SINAP-Dev"
+            minifyEnabled false
+            firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }
+            FirebasePerformance {
+                instrumentationEnabled false
+            }
+            firebaseAppDistribution {
+                artifactType="APK"
+                serviceCredentialsFile=rootDir.toString()+"/app/devbase-app-distribution.json"
+                releaseNotes="Newest release of Kejati-SINAP Debug Application"
+                // TODO: add tester email
+                testers="stefanus.ayudha@gmail.com"
+            }
+            testCoverageEnabled false
+            shrinkResources false
+            debuggable true
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-dev"
+        }
+        release {
+            resValue "string", "app_name", "SINAP"
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }
+            firebaseAppDistribution {
+                artifactType="APK"
+                serviceCredentialsFile=rootDir.toString()+"/app/devbase-app-distribution.json"
+                releaseNotes="Newest release of Kejati-SINAP Application"
+                // TODO: add tester email
+                testers="stefanus.ayudha@gmail.com"
+            }
+            testCoverageEnabled false
+            shrinkResources true
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+        unitTests.includeAndroidResources = true
+    }
+}
+
+dependencies {
+    // Test
+    testImplementation 'junit:junit:4.13.2'
+
+    // Android test
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // Android basic
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.core:core-ktx:1.5.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.20'
+
+    // Dependency injection
+    implementation libraries.koin
+
+    // Multidex
+    implementation "androidx.multidex:multidex:2.0.1"
+
+    // Security
+    implementation "com.github.mofneko:EmulatorDetector:1.1.0"
+    implementation 'com.scottyab:rootbeer-lib:0.1.0'
+
+    // Presentation
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'com.google.android:flexbox:2.0.1'
+    // material already compile in the codebase, but apparently they use implementation method
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
+
+    // Database
+    kapt "androidx.room:room-compiler:2.3.0"
+
+    // Multi threading
+    // implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-RC-native-mt'
+    // implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0-RC-native-mt'
+    // reactive already compiled in the codebase
+    // implementation "io.reactivex.rxjava2:rxjava:2.2.21"
+    // implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+
+    // Hardware features
+    // implementation "androidx.camera:camera-core:1.1.0-alpha04"
+    // implementation "androidx.camera:camera-camera2:1.1.0-alpha04"
+    // implementation "androidx.camera:camera-lifecycle:1.1.0-alpha04"
+    // implementation 'androidx.camera:camera-view:1.0.0-alpha24'
+
+    // Firebase
+    // implementation platform('com.google.firebase:firebase-bom:26.8.0')
+    // implementation 'com.google.firebase:firebase-messaging-ktx'
+    // implementation 'com.google.firebase:firebase-auth-ktx'
+    // implementation 'com.google.firebase:firebase-analytics-ktx'
+    // implementation 'com.google.firebase:firebase-config-ktx'
+    // implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    // implementation 'com.google.firebase:firebase-perf-ktx'
+
+    // Google
+    // implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    // implementation 'com.google.android.gms:play-services-ads:20.1.0'
+
+    // Live data
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+
+    // Debugging
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.5.20'
+
+    // Room
+    // room already compiled in the codebase, but apparently they use implementation method
+    kapt 'androidx.room:room-compiler:2.3.0'
+
+    // Fragment navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+
+    //HTTP Inspector
+    debugImplementation 'com.github.chuckerteam.chucker:library:3.5.0'
+    releaseImplementation 'com.github.chuckerteam.chucker:library-no-op:3.5.0'
+    implementation 'com.auth0.android:jwtdecode:2.0.0'
+
+    // Utils
+    // rotating image
+    implementation "androidx.exifinterface:exifinterface:1.3.2"
+    // encrypted shared preferences
+    implementation 'androidx.security:security-crypto:1.1.0-alpha03'
+}
