@@ -2,4 +2,7 @@
     <string name="error_running_in_a_rooted_device">Device is not safe  (ROOTED)</string>
     <string name="error_running_on_an_emulator">Defice is not safe (EMULATOR)</string>
     <string name="error_device_not_safe">Device is not safe!</string>
+    <string name="label_one">one</string>
+    <string name="label_three">three</string>
+    <string name="label_two">two</string>
 </resources>
