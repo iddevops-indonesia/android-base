@@ -12,14 +12,9 @@ dependencyResolutionManagement {
             alias('chucker-release').to('com.github.chuckerteam.chucker', 'library-no-op').versionRef('chucker')
 
             version('koin','3.1.5')
-            // Koin main features for Android
             alias('koin-android').to('io.insert-koin','koin-android').versionRef('koin')
-            // No more koin-android-viewmodel, koin-android-scope, koin-android-fragment
-            // Jetpack WorkManager
             alias('koin-androidx-workmanager').to('io.insert-koin','koin-androidx-workmanager').versionRef('koin')
-            // Navigation Graph
             alias('koin-androidx-navigation').to('io.insert-koin','koin-androidx-navigation').versionRef('koin')
-            // Jetpack Compose
             alias('koin-androidx-compose').to('io.insert-koin','koin-androidx-compose').versionRef('koin')
             bundle('koin', ['koin-android', 'koin-androidx-workmanager', 'koin-androidx-navigation','koin-androidx-compose'])
 
