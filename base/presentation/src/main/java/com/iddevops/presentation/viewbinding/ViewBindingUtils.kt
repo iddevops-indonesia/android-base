@@ -3,6 +3,7 @@ package com.iddevops.presentation.viewbinding
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
+import com.iddevops.presentation.activity.BaseActivity
 import com.iddevops.presentation.fragment.BaseFragment
 import java.lang.reflect.ParameterizedType
 
@@ -50,9 +51,9 @@ internal fun Any.findClass(): Class<*> {
     return result
 }
 
-//internal fun <V : ViewBinding> DevActivity<V>.getBinding(): V {
-//    return findClass().getBinding(layoutInflater)
-//}
+internal fun <V : ViewBinding> BaseActivity<V>.getBinding(): V {
+    return findClass().getBinding(layoutInflater)
+}
 
 internal fun <V : ViewBinding> BaseFragment<V>.getBinding(): V {
     return findClass().getBinding(layoutInflater)
