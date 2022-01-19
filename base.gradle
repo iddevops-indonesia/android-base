@@ -1,0 +1,55 @@
+android {
+    // custom manifest location
+    // use default manifest by default
+    var manifest_file = "src/main/AndroidManifest.xml"
+    if (project.file("AndroidManifest.xml").exists()) {
+        manifest_file = "AndroidManifest.xml"
+    }
+
+    // custom proguard location
+    // use parent proguard by default
+    var proguard_file = "$rootDir/proguard-rules.pro"
+    if (project.file("proguard-rules.pro").exists()) {
+        // force using own configuration
+        proguard_file = "proguard-rules.pro"
+    }
+
+    // use parent file by default
+    var consumer_file = "$rootDir/consumer-rules.pro"
+    if (project.file("consumer-rules.pro").exists()) {
+        // force using own configuration
+        proguard_file = "consumer-rules.pro"
+    }
+
+    compileSdk 31
+
+    defaultConfig {
+        minSdk 23
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles consumer_file
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), proguard_file
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile manifest_file
+        }
+    }
+}

@@ -1,0 +1,15 @@
+apply plugin:'com.android.application'
+apply plugin:'kotlin-android'
+apply from:"$rootDir/base.gradle"
+
+android{
+    buildFeatures{
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation project(path: ':base:utils')
+    implementation project(path: ':base:presentation')
+    implementation project(path: ':base:data')
+}

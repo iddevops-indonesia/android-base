@@ -1,0 +1,17 @@
+apply plugin:'com.android.library'
+apply plugin:'kotlin-android'
+apply from:"$rootDir/base.gradle"
+
+dependencies {
+    api project(path: ':base:utils')
+
+    // chucker
+    debugApi libs.chucker.debug
+    releaseApi libs.chucker.release
+
+    // koin
+    api libs.bundles.koin
+
+    // runtime worker
+    api libs.work.runtime
+}

@@ -1,0 +1,14 @@
+rootProject.name = "IDDevOps Android Code Base"
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+apply from:"version.gradle"
+include ':sample'
+include ':base'
+include ':base:utils'
+include ':base:data'
+include ':base:presentation'
