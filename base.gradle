@@ -53,3 +53,7 @@ android {
         }
     }
 }
+
+dependencies {
+    implementation 'com.github.User:Repo:0.17.2'
+}
