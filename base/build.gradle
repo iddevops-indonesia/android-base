@@ -1,6 +1,6 @@
 apply plugin:'com.android.library'
 apply plugin:'kotlin-android'
-apply from:"../base.gradle"
+apply from:"$rootDir/base.gradle"
 
 dependencies {
     api 'androidx.core:core-ktx:1.7.0'
