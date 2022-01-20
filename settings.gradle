@@ -7,11 +7,19 @@ dependencyResolutionManagement {
     }
 }
 apply from:"version.gradle"
-include ':sample'
-include ':base'
-include ':base:utils'
-include ':base:data'
-include ':base:presentation'
-include ':core'
-include ':feature'
-include ':feature:todo'
+
+if (System.env.JITPACK){
+    include ':base'
+    include ':base:utils'
+    include ':base:data'
+    include ':base:presentation'
+} else {
+    include ':sample'
+    include ':base'
+    include ':base:utils'
+    include ':base:data'
+    include ':base:presentation'
+    include ':core'
+    include ':feature'
+    include ':feature:todo'
+}
