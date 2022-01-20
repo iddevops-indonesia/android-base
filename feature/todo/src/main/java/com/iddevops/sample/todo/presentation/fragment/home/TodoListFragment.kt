@@ -16,17 +16,19 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>(),
 
     private val vm: TodoListViewModel by viewModel()
 
-    override fun initData() {
-        super.initData()
-        vm.getTodos("1")
-    }
-
     override fun initAction() {
         super.initAction()
         with(binding) {
             btnOne.setOnClickListener {
                 btnOne.text = "Ouch!!"
-                vm.getTodos("1")
+                val id = tvInput.text.toString()
+
+                if (id.isBlank()){
+                    tvContent.text = "Please enter user id\nTry 1"
+                    return@setOnClickListener
+                }
+
+                vm.getTodos(id)
                 wait(300) {
                     btnOne.text = "Refresh"
                 }
@@ -40,6 +42,12 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>(),
         vm.todos.observe(this)
     }
 
+    override fun onRequestDefault() {
+        super.onRequestDefault()
+        with(binding) {
+            pbOne.gone()
+        }
+    }
     override fun onRequestLoading() {
         super.onRequestLoading()
         with(binding) {
