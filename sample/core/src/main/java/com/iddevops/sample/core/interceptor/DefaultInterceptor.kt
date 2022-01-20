@@ -1,9 +1,7 @@
-package com.iddevops.utils.interceptor
+package com.iddevops.sample.core.interceptor
 
-import com.google.gson.JsonObject
 import okhttp3.Interceptor
 import okhttp3.Response
-import kotlin.getOrDefault as getOr
 
 class DefaultInterceptor: Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {

@@ -6,7 +6,7 @@ import com.iddevops.data.retrofit.createOkHttpService
 import com.iddevops.sample.data.activity.ActivityData
 import com.iddevops.sample.data.activity.web.ActivityApi
 import com.iddevops.sample.domain.repo.ActivityRepository
-import com.iddevops.utils.interceptor.DefaultInterceptor
+import com.iddevops.sample.core.interceptor.DefaultInterceptor
 import org.koin.core.module.Module
 import org.koin.dsl.module
 

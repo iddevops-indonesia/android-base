@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/base/presentation" />
             <option value="$PROJECT_DIR$/base/utils" />
             <option value="$PROJECT_DIR$/sample" />
+            <option value="$PROJECT_DIR$/sample/core" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
