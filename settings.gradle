@@ -8,11 +8,14 @@ dependencyResolutionManagement {
 }
 apply from:"version.gradle"
 
-include ':sample'
+if (!System.env.JITPACK) {
+    include ':sample'
+    include ':core'
+    include ':feature'
+    include ':feature:todo'
+}
+
 include ':base'
 include ':base:utils'
 include ':base:data'
 include ':base:presentation'
-include ':core'
-include ':feature'
-include ':feature:todo'
